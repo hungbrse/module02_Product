@@ -255,6 +255,7 @@ public class Product  implements Serializable , Comparable<Product> {
 
 
 
+
     private Category findCateById(int catalogId) {
         for(Category cat : CategoryFeatureImpl.categoryList) {
             if(cat.getCategoryId()==catalogId) {

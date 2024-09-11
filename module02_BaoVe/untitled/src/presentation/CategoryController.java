@@ -105,10 +105,8 @@ public class CategoryController {
         String name = sc.nextLine();
        CategoryFeatureImpl.categoryList.stream().filter(cate ->cate.getCategoryName().contains(name)).forEach(cate -> cate.displayCategory());
     }
-
     private void sortCategory() {
         Collections.sort(CategoryFeatureImpl.categoryList);
-
         CategoryFeatureImpl.categoryList.forEach(cate -> cate.displayCategory());
     }
 }

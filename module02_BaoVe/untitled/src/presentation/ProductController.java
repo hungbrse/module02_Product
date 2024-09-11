@@ -64,7 +64,7 @@ public class ProductController {
         }
     }
 
-    private void showProduct() {
+    public void showProduct() {
          ProductFeatureImpl.productList.forEach(product -> product.displayProduct());
     }
 
@@ -101,10 +101,17 @@ public class ProductController {
         }
     }
     private void findProduct(Scanner sc) {
-        System.out.println("nhập tên sản phẩm muốn tìm ");
-        String name = sc.nextLine();
+        System.out.println("nhập id sản phẩm muốn tìm ");
+        int id = Integer.parseInt(sc.nextLine());
 
-        ProductFeatureImpl.productList.stream().filter(product ->product.getProductName().contains(name)).forEach(product -> product.displayProduct());
+
+        Optional<Product> optionalProduct = ProductFeatureImpl.productList.stream().filter(product -> product.getProductId() == id).findFirst();
+        if(optionalProduct.isPresent()) {
+            Product product = optionalProduct.get();
+            product.displayProduct();
+        }else  {
+            System.err.println("id không tồn tại ");
+        }
 
     }
 

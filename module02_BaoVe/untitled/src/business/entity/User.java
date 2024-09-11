@@ -8,7 +8,13 @@ import java.util.Date;
 import java.util.Optional;
 import java.util.Scanner;
 
-public class User  implements Serializable {
+public class User  implements Serializable ,Comparable<User>{
+    @Override
+    public int compareTo(User o) {
+        return o.getUserName().compareTo(this.getUserName());
+    }
+
+    public static User currentUser;
     private int userId;
     private String userName;
     private String email;
@@ -125,7 +131,13 @@ public class User  implements Serializable {
     public void setEmail(String email) {
         this.email = email;
     }
+    public static User getCurrentUser() {
+        return currentUser;
+    }
 
+    public static void setCurrentUser(User currentUser) {
+        User.currentUser = currentUser;
+    }
     public void inputData(Scanner sc) {
         this.userId = inputUserId();
         this.email = inputEmail(sc);
@@ -246,4 +258,9 @@ public class User  implements Serializable {
     public User userLogin(User user) {
         return UserFeatureImpl.userList.stream().filter(u -> u.getEmail().equals(user.getEmail()) && u.getPassword().equals(user.getPassword())).findFirst().orElse(null);
     }
+    public void display() {
+        System.out.printf("ID: %d, Username: %s, Email: %s, Full Name: %s, Status: %s, Role: %s, Phone: %d, Address: %s, Created At: %s, Updated At: %s%n",
+                userId, userName, email, fullName, status ? "Active" : "Inactive", roleName, phoneNumber, address, created_at, updated_at);
+    }
+
 }

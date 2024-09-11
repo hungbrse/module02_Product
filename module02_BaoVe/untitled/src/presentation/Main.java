@@ -6,15 +6,18 @@ import business.feature.impl.UserFeatureImpl;
 import presentation.Menu.AdminMenu;
 import presentation.Menu.UserMenu;
 
+import java.util.Optional;
 import java.util.Scanner;
 
 public class Main {
     UserFeatureImpl userFeature = new UserFeatureImpl();
 
+
     public static void main(String[] args) {
         Main main = new Main();
         Scanner sc = new Scanner(System.in);
         UserController userController = new UserController();
+        ProductController productController = new ProductController();
         boolean isLoop = true;
         do {
             System.out.println("1. đăng ký ");
@@ -31,8 +34,12 @@ public class Main {
                 case 2:
                     main.login(sc);
                     break;
-
-
+                case 3:
+                    productController.showProduct();
+                    break;
+                    case 4:
+                        main.forgotPassword(sc);
+                        break;
                 case 5:
                     System.exit(1000);
                     break;
@@ -62,7 +69,9 @@ public class Main {
             user = user.userLogin(user);
             if (user != null) {
                 if (user.getRoleName().equals(RoleName.USER)) {
-                    UserMenu.userMenuController(sc);
+                    User.setCurrentUser(user);
+                    UserMenu.userMenuController(sc,user);
+
                 }
             } else {
                 System.err.println("email hoặc password sai ");
@@ -70,4 +79,18 @@ public class Main {
         }
     }
 
+    public void forgotPassword(Scanner sc) {
+        System.out.println("nhập email tài khoản quên mật khẩu ");
+        String email = sc.nextLine();
+
+        Optional<User> optionalUser = UserFeatureImpl.userList.stream().filter(user -> user.getEmail().equals(email)).findFirst();
+
+        if (optionalUser.isPresent()) {
+            User user = optionalUser.get();
+            System.out.println("passWord của " + email + "là " + user.getPassword());
+        } else  {
+            System.out.println("email không chính xác : ");
+        }
+
+    }
 }
