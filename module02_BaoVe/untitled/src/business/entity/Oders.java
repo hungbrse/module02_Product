@@ -136,21 +136,24 @@ public class Oders  implements Serializable {
         this.serialNumber = inputSerialNumber();
         this.userId = inputUserId();
         this.totalPrice = inputPrice();
-        this.note = inputOderNote(sc);
-        AddressFeatureImpl.addressList.stream().filter(ad -> ad.getUserId() == User.currentUser.getUserId()).forEach(ad -> ad.displayAddress());
-        System.out.println("nhập id address ");
-        int id = Integer.parseInt(sc.nextLine());
-        Optional<Address> optionalAddress = AddressFeatureImpl.addressList.stream().filter(ad -> ad.getAddress_id() == id).findFirst();
-        if (optionalAddress.isPresent()) {
-            Address address = optionalAddress.get();
-            this.receiveAddress = address.getAddress();
-                    this.receivePhone = address.getPhone();
+        Optional<Address> addressOptional = AddressFeatureImpl.addressList.stream().filter(address -> address.getUserId() == User.getCurrentUser().getUserId()).findFirst();
+        if (addressOptional.isPresent()) {
+            AddressFeatureImpl.addressList.stream().filter(ad -> ad.getUserId() == User.currentUser.getUserId()).forEach(ad -> ad.displayAddress());
+            System.out.println("nhập id address ");
+            int id = Integer.parseInt(sc.nextLine());
 
-        } else {
-            System.out.println("id địa chỉ không tồn tại ");
+            Optional<Address> optionalAddress = AddressFeatureImpl.addressList.stream().filter(ad -> ad.getAddress_id() == id && ad.getUserId() == User.getCurrentUser().getUserId()).findFirst();
+            if (optionalAddress.isPresent()) {
+                Address address = optionalAddress.get();
+                this.note = inputOderNote(sc);
+                this.receiveAddress = address.getAddress();
+                this.receivePhone = address.getPhone();
+
+            }
+        }  else {
+            System.err.println("danh sách địa chỉ trống ! ");
             return;
         }
-
         this.createDate = new Date();
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(createDate);

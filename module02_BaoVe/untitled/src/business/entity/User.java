@@ -151,6 +151,12 @@ public class User  implements Serializable ,Comparable<User>{
         this.updated_at = new Date();
     }
 
+    public void updataUser(Scanner sc) {
+        this.userName = inputUserName(sc);
+        this.fullName = inputFullName(sc);
+        this.phoneNumber = inputPhone(sc);
+    }
+
     private int inputUserId() {
       UserFeatureImpl.userList.stream().map(User::getUserId).max(Integer::compareTo).ifPresent(userId -> this.userId = userId +1);
       return userId;

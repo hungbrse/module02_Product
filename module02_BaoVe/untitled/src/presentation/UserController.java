@@ -14,6 +14,7 @@ public class UserController {
  public void userMenu(Scanner scanner) {
      boolean isLoop = true;
 
+
      do {
          System.out.println("1. hiển thị người dùng");
          System.out.println("2 .sửa thay đổi trạng thái ");
@@ -21,6 +22,31 @@ public class UserController {
          System.out.println("4 .tìm kiếm người dùng ");
          System.out.println("5 .sắp xếp người dùng ");
          System.out.println("6. thoát ");
+
+         int choice = Integer.parseInt(scanner.nextLine());
+         switch (choice) {
+             case 1:
+                 showUser();
+                 break;
+                 case 2:
+                     updataStatusUser(scanner);
+                     break;
+                     case 3:
+                         deleteUser(scanner);
+                         break;
+                         case 4:
+                             findUser(scanner);
+                             break;
+                             case 5:
+                                 sortUser();
+                                 break;
+                                 case 6:
+                                     isLoop = false;
+                                     break;
+             default:
+                 System.out.println("hãy nhập từ 1 đến 6 :");
+                 break;
+         }
 
 
      }while (isLoop);

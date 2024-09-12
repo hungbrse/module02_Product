@@ -3,6 +3,7 @@ package presentation.Menu;
 import presentation.CategoryController;
 import presentation.OderController;
 import presentation.ProductController;
+import presentation.UserController;
 
 import java.util.Scanner;
 
@@ -12,6 +13,8 @@ public class AdminMenu {
     public static void adminMenuController(Scanner sc) {
         CategoryController categoryController = new CategoryController();
         ProductController productController = new ProductController();
+        UserController userController = new UserController();
+        OderController oderController = new OderController();
 
         boolean isLoop = true;
 
@@ -32,9 +35,16 @@ public class AdminMenu {
                         case 2:
                             productController.menuProduct(sc);
                             break;
+                            case 3:
+                                oderController.adminOderMenu(sc);
+                                break;
+                    case 4:
+                        userController.userMenu(sc);
+                        break;
 
                     case 6:
                         isLoop = false;
+                        break;
                     default:
                         System.err.println("hãy nhập từ 1 đến 7 !");
                 }

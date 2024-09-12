@@ -1,7 +1,10 @@
 package presentation;
 
+import business.entity.Oders;
 import business.entity.RoleName;
 import business.entity.User;
+import business.feature.impl.OderDetailFeatureImpl;
+import business.feature.impl.OdersFeatureImpl;
 import business.feature.impl.UserFeatureImpl;
 import presentation.Menu.AdminMenu;
 import presentation.Menu.UserMenu;
@@ -63,7 +66,6 @@ public class Main {
         user.inputLogin(sc);
         // fix cứng tài khoản admin
         if (user.getEmail().equals("admin@gmail.com") && user.getPassword().equals("123456")) {
-            // điều hướng sang menu admin
             AdminMenu.adminMenuController(sc);
         } else {
             user = user.userLogin(user);
@@ -91,6 +93,5 @@ public class Main {
         } else  {
             System.out.println("email không chính xác : ");
         }
-
     }
 }

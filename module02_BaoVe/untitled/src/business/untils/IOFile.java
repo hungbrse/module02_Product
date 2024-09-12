@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class IOFile {
+    public static final String PATH_ODERDETAIL = "C:\\Users\\Admin\\Desktop\\module02_BaoVe\\untitled\\src\\business\\data\\oderDetail.txt";
     public static final String PATH_ADDRESS = "C:\\Users\\Admin\\Desktop\\module02_BaoVe\\untitled\\src\\business\\data\\address.txt";
     public static final String PATH_ODERS = "C:\\Users\\Admin\\Desktop\\module02_BaoVe\\untitled\\src\\business\\data\\oders.txt";
     public static final String PATH_PRODUCTS = "C:\\Users\\Admin\\Desktop\\module02_BaoVe\\untitled\\src\\business\\data\\product.txt";

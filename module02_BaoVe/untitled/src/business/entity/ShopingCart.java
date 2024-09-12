@@ -2,6 +2,7 @@ package business.entity;
 
 import business.feature.impl.ProductFeatureImpl;
 import business.feature.impl.ShopingCartFeatureImpl;
+import business.untils.IOFile;
 
 import java.io.Serializable;
 import java.util.Optional;
@@ -119,11 +120,12 @@ public class ShopingCart implements Serializable {
                 Optional<Product> optionalProduct = ProductFeatureImpl.productList.stream().filter(product -> product.getProductId() == productInd).findFirst();
                 if (optionalProduct.isPresent()) {
                     if (orderQuantity < optionalProduct.get().getStockQuantity()) {
+                        optionalProduct.get().setStockQuantity(optionalProduct.get().getStockQuantity() - orderQuantity);
+                        IOFile.writeObjectToFile(ProductFeatureImpl.productList,IOFile.PATH_PRODUCTS);
                         return orderQuantity;
                     } else  {
                         System.err.println("số lượng mua không được quá số lượng trong kho :");
                     }
-
                 }
 
             }catch (NumberFormatException e) {

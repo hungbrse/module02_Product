@@ -46,6 +46,7 @@ public class ProductController {
                                        break;
                                        case 7:
                                            isLoop = false;
+                                           break;
                  default:
                      System.err.println("hãy nhập từ 1 đến 7 !");
                              break;

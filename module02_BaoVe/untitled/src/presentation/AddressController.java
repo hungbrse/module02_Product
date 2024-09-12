@@ -45,6 +45,7 @@ public class AddressController {
                     break;
                                     case 7:
                                         isLoop = false;
+                                        break;
                 default:
                     System.err.println("hãy nhập từ 1 đến 6 ");
                     break;
@@ -57,7 +58,14 @@ public class AddressController {
 
     public void showAddress() {
 
-        AddressFeatureImpl.addressList.stream().filter(ad -> ad.getUserId() == User.getCurrentUser().getUserId()).forEach(ad -> ad.displayAddress());
+        Optional<Address> optionalAddress = AddressFeatureImpl.addressList.stream().filter(address -> address.getAddress_id() == User.getCurrentUser().getUserId()).findFirst();
+        if (optionalAddress.isPresent()) {
+            Address address = optionalAddress.get();
+            AddressFeatureImpl.addressList.stream().filter(ad -> ad.getUserId() == User.getCurrentUser().getUserId()).forEach(ad -> ad.displayAddress());
+        }else  {
+            System.err.println("địa chỉ adress trống : ");
+        }
+
     }
 
     public void addAddress(Scanner sc) {

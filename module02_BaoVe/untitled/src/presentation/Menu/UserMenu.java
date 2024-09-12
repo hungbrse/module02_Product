@@ -1,11 +1,13 @@
 package presentation.Menu;
 
 import business.entity.User;
+import business.feature.impl.UserFeatureImpl;
 import presentation.AddressController;
 import presentation.OderController;
 import presentation.ProductController;
 import presentation.ShopingCartController;
 
+import java.util.Optional;
 import java.util.Scanner;
 
 public class UserMenu {
@@ -31,7 +33,7 @@ public class UserMenu {
                productController.showProduct();
                     break;
                 case 2:
-              userMenu.viewPersonalInfo(currentUser);
+              userMenu.personalInfo(sc);
               break;
               case 3:
                   shopingCartController.shopingCartMenu();
@@ -50,18 +52,56 @@ public class UserMenu {
         }while(isLoop);
     }
 
+    public void personalInfo(Scanner sc) {
+        boolean isLoop = true;
+        do {
+            int choice = Integer.parseInt(sc.nextLine());
+            switch (choice) {
+                case 1:
+                    viewPersonalInfo(User.getCurrentUser());
+                    break;
+                    case 2:
+                        updataUser(sc);
+                        break;
+                        case 3:
+                    changePassword(sc);
+                    break;
+                    case 4:
+                        isLoop = false;
+                        break;
+                default:
+                    System.out.println("nhập từ 1 đến 4 ");
+                    break;
+            }
+        }while (isLoop);
+    }
+
     public void viewPersonalInfo(User user) {
-        System.out.println("Thông tin cá nhân:");
-        System.out.println("ID: " + user.getUserId());
-        System.out.println("Họ và tên: " + user.getFullName());
-        System.out.println("Email: " + user.getEmail());
-        System.out.println("Tên đăng nhập: " + user.getUserName());
-        System.out.println("Địa chỉ: " + user.getAddress());
-        System.out.println("Số điện thoại: " + user.getPhoneNumber());
-        System.out.println("Ngày tạo: " + user.getCreated_at());
-        System.out.println("Ngày cập nhật: " + user.getUpdated_at());
-        System.out.println("Trạng thái: " + (user.getStatus() ? "Hoạt động" : "Không hoạt động"));
-        System.out.println("Vai trò: " + user.getRoleName());
+        System.out.printf("Thông tin cá nhân: ID: %s, Họ và tên: %s, Email: %s, Tên đăng nhập: %s, Địa chỉ: %s, Số điện thoại: %s, Ngày tạo: %s, Ngày cập nhật: %s, Trạng thái: %s, Vai trò: %s%n",
+                user.getUserId(),
+                user.getFullName(),
+                user.getEmail(),
+                user.getUserName(),
+                user.getAddress(),
+                user.getPhoneNumber(),
+                user.getCreated_at(),
+                user.getUpdated_at(),
+                (user.getStatus() ? "Hoạt động" : "Không hoạt động"),
+                user.getRoleName());
+    }
+    public void updataUser(Scanner sc) {
+        User currentUser = User.getCurrentUser();
+                 currentUser.updataUser(sc);
+    }
+    public void changePassword(Scanner sc) {
+        User currentUser = User.getCurrentUser();
+        System.out.println("nhập mật khẩu cũ : ");
+        String oldPassword = sc.nextLine();
+        Optional<User> optionalUser = UserFeatureImpl.userList.stream().filter(user -> user.getPassword().equals(oldPassword)).findFirst();
+        if (optionalUser.isPresent()) {
+            String newPassword = sc.nextLine();
+            optionalUser.get().setPassword(newPassword);
+        }
     }
 
 }
